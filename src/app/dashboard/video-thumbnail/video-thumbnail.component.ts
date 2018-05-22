@@ -16,7 +16,7 @@ export class VideoThumbnailComponent implements OnInit {
 
 }
 
-interface Video {
+export interface Video {
   title: string;
   author: string;
   id: string;
