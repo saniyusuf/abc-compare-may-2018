@@ -1,6 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Video} from '../video-thumbnail/video-thumbnail.component';
 import {HttpClient} from '@angular/common/http';
+import {VideoService} from '../../video.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-video-list',
@@ -8,14 +10,12 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./video-list.component.css']
 })
 export class VideoListComponent implements OnInit {
-  videoList: Video[];
+  videoList$: Observable<Video[]>;
   selectedVideo;
   @Output() selectVideo = new EventEmitter<Video>();
 
-  constructor(http: HttpClient) {
-    http
-      .get<Video[]>('https://api.angularbootcamp.com/videos')
-      .subscribe(videos => this.videoList = videos);
+  constructor(videoService: VideoService) {
+    this.videoList$ = videoService.getVideos();
   }
 
   ngOnInit() {
